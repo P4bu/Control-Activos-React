@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Activo, agregarSalida, eliminarActivo } from '../services/activoService';
 import { Edit, Trash, Plus } from 'lucide-react';
-import '../styles/ActivoList.css'; // Asegúrate de crear este archivo y agregar las clases CSS necesarias
+import '../styles/ActivoList.css'; // Asegúrate de que el CSS esté disponible
 
 interface ActivoListProps {
   activos: Activo[];
@@ -9,35 +9,39 @@ interface ActivoListProps {
 }
 
 const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
-  // Estado para manejar la visibilidad del popup
+  // Estado para manejar la visibilidad del popup de agregar salida
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Estado para manejar la visibilidad del popup de confirmación de eliminación
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [activoSeleccionado, setActivoSeleccionado] = useState<number | null>(null);
   // Estado para manejar los datos del formulario del popup
   const [formData, setFormData] = useState({
     asignadoA: '',
     ticket: `TICKET-${Date.now()}`, // Ticket auto-generado basado en timestamp
     fechaSalida: new Date().toISOString().split('T')[0], // Fecha actual
   });
-  // Estado para saber qué activo estamos editando
-  const [activoSeleccionado, setActivoSeleccionado] = useState<number | null>(null);
 
-  const handleEliminar = (indice: number) => {
-    const nuevosActivos = eliminarActivo(activos, indice);
-    setActivos(nuevosActivos);
+  // Función para manejar la eliminación de un activo
+  const handleEliminar = () => {
+    if (activoSeleccionado !== null) {
+      const nuevosActivos = eliminarActivo(activos, activoSeleccionado);
+      setActivos(nuevosActivos);
+      setIsDeleteModalOpen(false); // Cerrar el modal de eliminación después de eliminar
+    }
   };
 
-  // Función para abrir el modal
+  // Función para abrir el modal de agregar salida
   const handleAgregarSalida = (indice: number) => {
     setActivoSeleccionado(indice);
     setIsModalOpen(true);
-    // Restablecer los valores del formulario
     setFormData({
       asignadoA: '',
-      ticket: `TICKET-${Date.now()}`, // Nuevo ticket generado
-      fechaSalida: new Date().toISOString().split('T')[0], // Fecha actual
+      ticket: `TICKET-${Date.now()}`,
+      fechaSalida: new Date().toISOString().split('T')[0],
     });
   };
 
-  // Función para cerrar el modal
+  // Función para cerrar el modal de agregar salida
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -45,10 +49,29 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
   // Función para manejar la presentación de datos y actualización del activo
   const handleSubmit = () => {
     if (activoSeleccionado !== null) {
-      const nuevosActivos = agregarSalida(activos, activoSeleccionado, formData.fechaSalida, formData.ticket, formData.asignadoA);
+      const nuevosActivos = agregarSalida(
+        activos,
+        activoSeleccionado,
+        formData.fechaSalida,
+        formData.ticket,
+        formData.asignadoA
+      );
       setActivos(nuevosActivos);
     }
-    closeModal(); // Cerrar el modal después de agregar la salida
+    // Cerrar el modal después de agregar la salida
+    closeModal(); 
+  };
+
+  // Función para abrir el modal de confirmación de eliminación
+  const openDeleteModal = (indice: number) => {
+    setActivoSeleccionado(indice);
+    setIsDeleteModalOpen(true);
+  };
+
+  // Función para cerrar el modal de confirmación de eliminación
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setActivoSeleccionado(null);
   };
 
   return (
@@ -63,7 +86,7 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
                 <p className="text-gray-700">Serie: {activo.serie}</p>
                 <p className="text-gray-700">Orden de Compra: {activo.ordenCompra}</p>
                 <p className="text-gray-700">Fecha de Ingreso: {activo.fechaIngreso}</p>
-                {activo.asignadoA && (  
+                {activo.asignadoA && (
                   <p className="text-gray-700">Asignado: {activo.asignadoA}</p>
                 )}
                 {activo.fechaSalida && (
@@ -78,9 +101,9 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
                   <Edit className="w-4 h-4 mr-2" />
                   Editar
                 </button>
-                <button 
+                <button
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2"
-                  onClick={() => handleEliminar(indice)}
+                  onClick={() => openDeleteModal(indice)}
                 >
                   <Trash className="w-4 h-4 mr-2" />
                   Eliminar
@@ -146,6 +169,24 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
                 onClick={closeModal}
                 className="btn-cancel"
               >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Confirmación de Eliminación */}
+      {isDeleteModalOpen && (
+        <div className="modal-overlay" onClick={closeDeleteModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2 className="modal-title">¿Estás seguro?</h2>
+            <p className="text-gray-700">¿Seguro que deseas eliminar este activo?</p>
+            <div className="modal-actions">
+              <button onClick={handleEliminar} className="btn-delete">
+                Eliminar
+              </button>
+              <button onClick={closeDeleteModal} className="btn-cancel">
                 Cancelar
               </button>
             </div>
