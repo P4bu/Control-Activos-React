@@ -23,8 +23,15 @@ export interface Activo {
   };
   
   // Función para editar un activo (obtenerlo por su índice)
-  export const editarActivo = (activos: Activo[], indice: number): Activo => {
-    return activos[indice];
+  export const editarActivo = (activos: Activo[], indice: number, fechaIngreso: string, marca: string, modelo: string, serie: string, ordenCompra: string): Activo[] => {
+    const nuevosActivos = [...activos];
+    nuevosActivos[indice].fechaIngreso = fechaIngreso
+    nuevosActivos[indice].marca = marca
+    nuevosActivos[indice].modelo = modelo
+    nuevosActivos[indice].serie = serie
+    nuevosActivos[indice].ordenCompra = ordenCompra
+
+    return nuevosActivos;
   };
   
   // Función para eliminar un activo
