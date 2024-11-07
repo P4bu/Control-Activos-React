@@ -26,9 +26,10 @@
 
 /* Ajustar los inputs para que se alineen mejor */
 .form-container input[type="date"],
+.form-container select ,
 .form-container input[type="text"] {
   width: 100%;
-  max-width: 320px; 
+  max-width: 320px;  
 }
 
 /* Mejorar el espaciado y disposición del formulario */

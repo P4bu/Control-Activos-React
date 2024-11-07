@@ -9,6 +9,9 @@ interface Activo {
   marca: string;
   modelo: string;
   serie: string;
+  activoFijo: string;
+  descripcion: string;
+  estado: string
   ordenCompra: string;
 }
 
@@ -19,7 +22,10 @@ const App = () => {
     marca: '',
     modelo: '',
     serie: '',
-    ordenCompra: '',
+    activoFijo: '',
+    descripcion: '',
+    estado: '',
+    ordenCompra: ''
   });
   const [editar, setEditar] = useState(false);
   const [indiceEditar, setIndiceEditar] = useState(-1);

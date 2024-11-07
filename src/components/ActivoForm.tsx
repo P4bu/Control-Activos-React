@@ -7,6 +7,9 @@ export interface Activo {
   marca: string;
   modelo: string;
   serie: string;
+  activoFijo: string;
+  descripcion: string;
+  estado: string;
   ordenCompra: string;
 }
 
@@ -47,13 +50,16 @@ const ActivoForm: React.FC<ActivoFormProps> = ({
       marca: '',
       modelo: '',
       serie: '',
-      ordenCompra: '',
+      activoFijo: '',
+      descripcion: '',
+      estado: '',
+      ordenCompra: ''
     });
     setEditar(false);
     setIndiceEditar(-1);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = event.target;
     setActivo(prevActivo => ({
       ...prevActivo,
@@ -100,6 +106,37 @@ const ActivoForm: React.FC<ActivoFormProps> = ({
             value={activo.serie}
             onChange={handleChange}
           />
+        </div>
+        <div className="form-group">
+          <label htmlFor="ordenCompra">Activo Fijo</label>
+          <input
+            id="activoFijo"
+            type="text"
+            value={activo.activoFijo}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="ordenCompra">Descripción</label>
+          <input
+            id="descripcion"
+            type="text"
+            value={activo.descripcion}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="estado">Estado</label>
+          <select
+            id="estado"
+            value={activo.estado}
+            onChange={handleChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+            <option value="Disponible">Disponible</option>
+            <option value="No disponible">No disponible</option>
+            <option value="Baja">Baja</option>
+          </select>
         </div>
         <div className="form-group">
           <label htmlFor="ordenCompra">Orden de Compra</label>

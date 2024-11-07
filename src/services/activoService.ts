@@ -4,6 +4,9 @@ export interface Activo {
     marca: string;
     modelo: string;
     serie: string;
+    activoFijo: string;
+    descripcion: string;
+    estado: string;
     ordenCompra: string;
     fechaSalida?: string;
     ticket?: string;

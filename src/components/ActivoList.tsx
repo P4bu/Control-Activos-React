@@ -130,6 +130,7 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
                 <p className="text-gray-700">Serie: {activo.serie}</p>
                 <p className="text-gray-700">Orden de Compra: {activo.ordenCompra}</p>
                 <p className="text-gray-700">Fecha de Ingreso: {activo.fechaIngreso}</p>
+                <p className="text-gray-700">Estado: {activo.estado}</p>
                 {activo.asignadoA && (
                   <p className="text-gray-700">Asignado: {activo.asignadoA}</p>
                 )}
@@ -318,3 +319,4 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
 };
 
 export default ActivoList;
+
