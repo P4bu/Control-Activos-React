@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activo, agregarSalida, agregarActivo, eliminarActivo, editarActivo } from '../services/activoService';
+import { Activo, agregarSalida, eliminarActivo } from '../services/activoService';
 import { Edit, Trash, Plus } from 'lucide-react';
 
 interface ActivoListProps {
@@ -8,6 +8,10 @@ interface ActivoListProps {
 }
 
 const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
+  const handleEliminar = (indice: number) => {
+    const nuevosActivos = eliminarActivo(activos, indice);
+    setActivos(nuevosActivos);
+  }
   return (
     <div className="mt-4">
       <h2 className="text-2xl font-bold mb-2">Activos</h2>
@@ -24,7 +28,10 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
                   <Edit className="w-4 h-4 mr-2" />
                   Editar
                 </button>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">
+                <button 
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2"
+                onClick={() => handleEliminar(indice)}
+                >
                   <Trash className="w-4 h-4 mr-2" />
                   Eliminar
                 </button>
