@@ -1,6 +1,6 @@
 import React from 'react';
 import { Activo, agregarSalida, eliminarActivo } from '../services/activoService';
-import { Edit, Trash, Plus } from 'lucide-react';
+import { Edit, Trash, Plus, Ticket } from 'lucide-react';
 
 interface ActivoListProps {
   activos: Activo[];
@@ -12,6 +12,10 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
     const nuevosActivos = eliminarActivo(activos, indice);
     setActivos(nuevosActivos);
   }
+  const handleAgregarSalida = (activos: Activo[] ,indice: number, fechaSalida: string, ticket: string, asignadoA: string) => {
+    const nuevosActivos = agregarSalida(activos, indice, fechaSalida, ticket, asignadoA)
+    setActivos(nuevosActivos)
+  }
   return (
     <div className="mt-4">
       <h2 className="text-2xl font-bold mb-2">Activos</h2>
@@ -21,7 +25,10 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
             <div className="flex justify-between">
               <div>
                 <p className="text-lg font-bold">{activo.marca} {activo.modelo}</p>
-                {/* Mostrar detalles del activo */}
+                <p className="text-gray-700">Serie: {activo.serie}</p>
+                <p className="text-gray-700">Orden de Compra: {activo.ordenCompra}</p>
+                <p className="text-gray-700">Fecha de Ingreso: {activo.fechaIngreso}</p>
+                <p className="text-gray-700">Fecha de Salida: {activo.fechaSalida}</p>
               </div>
               <div>
                 <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2">
@@ -38,7 +45,7 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
                 {!activo.fechaSalida && (
                   <button
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => agregarSalida(activos, indice, '2024-01-01', '12345', 'Juan Pérez')}
+                    onClick={() => handleAgregarSalida(activos, indice, '2024-01-01', '12345', 'Juan Pérez')}
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Agregar Salida
