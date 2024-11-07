@@ -168,7 +168,7 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
         ))}
       </ul>
 
-      {/* Modal para agregar salida */}
+      {/* Modal para agregarsalida */}
       {isModalOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
