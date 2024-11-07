@@ -9,16 +9,21 @@ interface ActivoListProps {
 }
 
 const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
+
   // Estado para manejar la visibilidad del popup de agregar salida
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Estado para manejar la visibilidad del popup de confirmación de eliminación
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [activoSeleccionado, setActivoSeleccionado] = useState<number | null>(null);
+
   // Estado para manejar los datos del formulario del popup
   const [formData, setFormData] = useState({
     asignadoA: '',
-    ticket: `TICKET-${Date.now()}`, // Ticket auto-generado basado en timestamp
-    fechaSalida: new Date().toISOString().split('T')[0], // Fecha actual
+     // Ticket auto-generado basado en timestamp
+    ticket: `TICKET-${Date.now()}`,
+    // Fecha actual
+    fechaSalida: new Date().toISOString().split('T')[0], 
   });
 
   // Función para manejar la eliminación de un activo
@@ -26,7 +31,8 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
     if (activoSeleccionado !== null) {
       const nuevosActivos = eliminarActivo(activos, activoSeleccionado);
       setActivos(nuevosActivos);
-      setIsDeleteModalOpen(false); // Cerrar el modal de eliminación después de eliminar
+      // Cerrar el modal de eliminación después de eliminar
+      setIsDeleteModalOpen(false); 
     }
   };
 
