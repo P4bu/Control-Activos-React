@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activo, agregarSalida, agregarActivo, eliminarActivo, editarActivo } from '../services/activoService';
+import { Activo, agregarSalida } from '../services/activoService';
 import { Edit, Trash, Plus } from 'lucide-react';
 
 interface ActivoListProps {
@@ -8,6 +8,7 @@ interface ActivoListProps {
 }
 
 const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
+
   return (
     <div className="mt-4">
       <h2 className="text-2xl font-bold mb-2">Activos</h2>
