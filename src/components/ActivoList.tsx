@@ -120,6 +120,8 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
 
   return (
     <div className="mt-4">
+      {activos.length !== 0 &&(
+        <>
       <h2 className="text-2xl font-bold mb-2">Activos</h2>
       <ul>
         {activos.map((activo, indice) => (
@@ -150,14 +152,14 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
                 <button
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2"
                   onClick={() => openDeleteModal(indice)}
-                >
+                  >
                   <Trash className="w-4 h-4 mr-2" />
                   Eliminar
                 </button>
                 {!activo.fechaSalida && (
                   <button
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleAgregarSalida(indice)}
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={() => handleAgregarSalida(indice)}
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Agregar Salida
@@ -168,6 +170,8 @@ const ActivoList: React.FC<ActivoListProps> = ({ activos, setActivos }) => {
           </li>
         ))}
       </ul>
+        </>
+      )}
 
       {/* Modal para agregarsalida */}
       {isModalOpen && (

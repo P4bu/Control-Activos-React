@@ -133,6 +133,7 @@ const ActivoForm: React.FC<ActivoFormProps> = ({
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
+            <option value="">Seleccione un estado</option>
             <option value="Disponible">Disponible</option>
             <option value="No disponible">No disponible</option>
             <option value="Baja">Baja</option>
