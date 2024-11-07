@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+// src/components/ActivoForm.tsx
+import React from 'react';
 import { Activo, agregarActivo, guardarEdicion } from '../services/activoService';
 import '../styles/ActivoForm.css';
 
